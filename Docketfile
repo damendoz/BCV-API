@@ -1,0 +1,16 @@
+# Usar una imagen oficial de Python como imagen base
+FROM python:3.11-slim
+
+# Establecer el directorio de trabajo
+WORKDIR /app
+
+# Copiar los archivos de requisitos y el proyecto al contenedor
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+COPY . .
+
+# Establecer la variable de entorno
+ENV PYTHONUNBUFFERED 1
+
+# Ejecutar las migraciones y el servidor de desarrollo
+CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
